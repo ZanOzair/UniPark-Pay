@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ERD Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <div class="mermaid">
+erDiagram
+    USER ||--o{ PARKING_SESSION : ""
+    USER ||--o{ PAYMENT_QR_CODE : "creates"
+    PARKING_SESSION }|--|| PARKING_AREA : ""
+    PARKING_SESSION }|--|| PAYMENT_QR_CODE : "uses"
+    
+    USER {
+        int id PK
+        string university_id
+        string name
+        string phone_number
+        string role "ENUM('student', 'lecturer', 'admin', 'guest')"
+        datetime expiry_date
+        string car_plate_no
+    }
+    
+    PARKING_SESSION {
+        int id PK
+        datetime start_time
+        datetime end_time
+        decimal latitude "GPS latitude"
+        decimal longitude "GPS longitude"
+        int user_id FK
+        int parking_area_id FK
+        int payment_qr_code_id FK
+        string status "ENUM('approved', 'unverified', 'rejected')"
+        longblob payment_proof
+        string proof_filename
+        string proof_mime_type
+        datetime created_at
+    }
+    
+    PARKING_AREA {
+        int id PK
+        string name
+        decimal latitude "Central latitude"
+        decimal longitude "Central longitude"
+        decimal radius "meters"
+    }
+    
+    PAYMENT_QR_CODE {
+        int id PK
+        string filename
+        string bank_name
+        longblob qr_image
+        string proof_mime_type
+        int user_id FK "Creator (admin)"
+        datetime created_at
+    }
+    </div>
+</body>
+</html>

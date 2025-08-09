@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:lts
+    container_name: uniparkpay_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqltoor
+      MYSQL_DATABASE: uniparkpay
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/uniparkpay_schema.sql:/docker-entrypoint-initdb.d/uniparkpay_schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mysql_data:
