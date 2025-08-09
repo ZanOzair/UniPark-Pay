@@ -23,10 +23,7 @@ class MapWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(
-        initialCenter: center,
-        initialZoom: zoom,
-      ),
+      options: MapOptions(initialCenter: center, initialZoom: zoom),
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -41,28 +38,29 @@ class MapWidget extends StatelessWidget {
                 height: 80,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.location_on,
-                      color: markerColor,
-                      size: 40,
-                    ),
+                    Icon(Icons.location_on, color: markerColor, size: 40),
                     if (markerTitle != null)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.7),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          markerTitle!,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.7),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            markerTitle!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                         ),
                       ),
